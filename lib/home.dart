@@ -58,85 +58,77 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-        elevation: 0.0,
-      ),
-      body: Center(
-        child: Column(
-          children: <Widget>[
-            Material(
-              elevation: 8.0,
-              child: Container(
-                color: Colors.red,
-                child: Column(
-                  children: <Widget>[
-                    Container(
-                      decoration: new BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: new BorderRadius.only(
-                              topLeft: radius,
-                              topRight: radius,
-                              bottomLeft: radius,
-                              bottomRight: radius)),
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Icon(
-                          Icons.directions_bike,
-                          size: ICON_SIZE,
-                          color: Colors.red,
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                    ),
-                    Text(
-                      _currentObjective.name,
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    Text(
-                      _getMoneySavedInEuros().toString() + "€",
-                      style: Theme.of(context).textTheme.display1.apply(color: Colors.white),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 23, vertical: 8),
-                      child: LinearPercentIndicator(
-                        lineHeight: 9.0,
-                        percent: _moneySaved / _currentObjective.price,
-                        backgroundColor: Colors.white,
-                        progressColor: Theme.of(context).accentColor,
-                        animation: true,
-                        animationDuration: 500,
-                        animateFromLastPercent: true,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                    )
-                  ],
-                ),
-              ),
-            ),
-            Expanded(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    return Center(
+      child: Column(
+        children: <Widget>[
+          Material(
+            elevation: 8.0,
+            child: Container(
+              color: Colors.red,
+              child: Column(
                 children: <Widget>[
-                  GlobalStats(
-                      "Total économisé", _getTotalMoneySavedInEuros() + "€"),
-                  GlobalStats("Trajets effectués", _numberOfTrips.toString()),
+                  Container(
+                    decoration: new BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: new BorderRadius.only(
+                            topLeft: radius,
+                            topRight: radius,
+                            bottomLeft: radius,
+                            bottomRight: radius)),
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Icon(
+                        Icons.directions_bike,
+                        size: ICON_SIZE,
+                        color: Colors.red,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                  ),
+                  Text(
+                    _currentObjective.name,
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  Text(
+                    _getMoneySavedInEuros().toString() + "€",
+                    style: Theme.of(context)
+                        .textTheme
+                        .display1
+                        .apply(color: Colors.white),
+                  ),
+                  Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 23, vertical: 8),
+                    child: LinearPercentIndicator(
+                      lineHeight: 9.0,
+                      percent: _moneySaved / _currentObjective.price,
+                      backgroundColor: Colors.white,
+                      progressColor: Theme.of(context).accentColor,
+                      animation: true,
+                      animationDuration: 500,
+                      animateFromLastPercent: true,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                  )
                 ],
               ),
-            )
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => _addMoney(190),
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
+            ),
+          ),
+          Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                GlobalStats(
+                    "Total économisé", _getTotalMoneySavedInEuros() + "€"),
+                GlobalStats("Trajets effectués", _numberOfTrips.toString()),
+              ],
+            ),
+          )
+        ],
       ),
     );
   }

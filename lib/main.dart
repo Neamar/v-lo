@@ -19,11 +19,64 @@ class VeloApp extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-        primarySwatch: Colors.red,
-        accentColor: Colors.lime
+          primarySwatch: Colors.red,
+          accentColor: Colors.lime
       ),
-      home: HomePage(title: 'V€LO'),
+      home: Scaffolder(),
 
+    );
+  }
+}
+
+class Scaffolder extends StatefulWidget {
+  @override
+  _ScaffolderState createState() => _ScaffolderState();
+}
+
+class _ScaffolderState extends State<Scaffolder> {
+  int _currentTab = 0;
+
+  void onTabTapped(int index) {
+    setState(() {
+      _currentTab = index;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    Widget mainWidget;
+    if (_currentTab == 0) {
+      mainWidget = HomePage();
+    }
+    else if (_currentTab == 1) {
+      mainWidget = Container(color: Colors.purpleAccent);
+    }
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("V€LO"),
+        elevation: 0.0,
+      ),
+      body: mainWidget,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => {},
+        tooltip: 'Increment',
+        child: Icon(Icons.add),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        onTap: onTabTapped,
+        currentIndex: _currentTab,
+        items: [
+          new BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            title: Text('Accueil'),
+          ),
+          new BottomNavigationBarItem(
+            icon: Icon(Icons.star),
+            title: Text('Objectifs'),
+          ),
+        ],
+      ),
     );
   }
 }
