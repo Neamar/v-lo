@@ -25,12 +25,11 @@ class Objective {
   int price;
 
   Objective(this.category, this.name, this.price);
-
-
 }
 
 class _HomePageState extends State<HomePage> {
   double _moneySaved = 0;
+  int _numberOfTrips = 5;
   Objective _currentObjective = Objective(0, "Casque de vélo", 3500);
 
   void _addMoney(int value) {
@@ -41,14 +40,16 @@ class _HomePageState extends State<HomePage> {
       // _counter without calling setState(), then the build method would not be
       // called again, and so nothing would appear to happen.
       _moneySaved += value;
+      _numberOfTrips++;
     });
   }
 
   String _getMoneySavedInEuros() {
-    String r = (_moneySaved / 100).toString();
-    if(_moneySaved % 10 == 0) {
-      r += '0';
-    }
+    return (_moneySaved / 100).toStringAsFixed(2);
+  }
+
+  String _getTotalMoneySavedInEuros() {
+    String r = ((_moneySaved + 550) / 100).round().toString();
     return r;
   }
 
@@ -59,23 +60,38 @@ class _HomePageState extends State<HomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              _currentObjective.name,
-            ),
-            Text(
-              _getMoneySavedInEuros().toString() + "€",
-              style: Theme.of(context).textTheme.display1,
-            ),
-            new LinearPercentIndicator(
-              lineHeight: 4.0,
-              percent: _moneySaved / _currentObjective.price,
-              backgroundColor: Colors.grey,
-              progressColor: Colors.blue,
-            ),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: <Widget>[
+              Icon(
+                Icons.directions_bike,
+                size: 120,
+              ),
+              Text(
+                _currentObjective.name,
+              ),
+              Text(
+                _getMoneySavedInEuros().toString() + "€",
+                style: Theme.of(context).textTheme.display1,
+              ),
+              new LinearPercentIndicator(
+                lineHeight: 5.0,
+                percent: _moneySaved / _currentObjective.price,
+                backgroundColor: Colors.grey,
+                progressColor: Colors.blue,
+              ),
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    GlobalStats("Total économisé", _getTotalMoneySavedInEuros() + "€"),
+                  GlobalStats("Trajets effectués", _numberOfTrips.toString()),
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
@@ -85,4 +101,25 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+}
+
+class GlobalStats extends StatelessWidget {
+  String name;
+  String value;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Text(name),
+        Text(
+          value,
+          style: Theme.of(context).textTheme.display2,
+        ),
+      ],
+    )
+  }
+
+  GlobalStats(String this.name, String this.value);
 }
