@@ -28,6 +28,9 @@ class Objective {
 }
 
 class _HomePageState extends State<HomePage> {
+  static const double ICON_SIZE = 80;
+  static const radius = Radius.circular(ICON_SIZE);
+
   double _moneySaved = 0;
   int _numberOfTrips = 5;
   Objective _currentObjective = Objective(0, "Casque de vélo", 3500);
@@ -58,40 +61,76 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+        elevation: 0.0,
       ),
       body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: <Widget>[
-              Icon(
-                Icons.directions_bike,
-                size: 120,
-              ),
-              Text(
-                _currentObjective.name,
-              ),
-              Text(
-                _getMoneySavedInEuros().toString() + "€",
-                style: Theme.of(context).textTheme.display1,
-              ),
-              new LinearPercentIndicator(
-                lineHeight: 5.0,
-                percent: _moneySaved / _currentObjective.price,
-                backgroundColor: Colors.grey,
-                progressColor: Colors.blue,
-              ),
-              Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        child: Column(
+          children: <Widget>[
+            Material(
+              elevation: 8.0,
+              child: Container(
+                color: Colors.red,
+                child: Column(
                   children: <Widget>[
-                    GlobalStats("Total économisé", _getTotalMoneySavedInEuros() + "€"),
-                  GlobalStats("Trajets effectués", _numberOfTrips.toString()),
+                    Container(
+                      decoration: new BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: new BorderRadius.only(
+                              topLeft: radius,
+                              topRight: radius,
+                              bottomLeft: radius,
+                              bottomRight: radius)),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Icon(
+                          Icons.directions_bike,
+                          size: ICON_SIZE,
+                          color: Colors.red,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                    ),
+                    Text(
+                      _currentObjective.name,
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    Text(
+                      _getMoneySavedInEuros().toString() + "€",
+                      style: Theme.of(context).textTheme.display1.apply(color: Colors.white),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 23, vertical: 8),
+                      child: LinearPercentIndicator(
+                        lineHeight: 9.0,
+                        percent: _moneySaved / _currentObjective.price,
+                        backgroundColor: Colors.white,
+                        progressColor: Theme.of(context).accentColor,
+                        animation: true,
+                        animationDuration: 500,
+                        animateFromLastPercent: true,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                    )
                   ],
                 ),
-              )
-            ],
-          ),
+              ),
+            ),
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  GlobalStats(
+                      "Total économisé", _getTotalMoneySavedInEuros() + "€"),
+                  GlobalStats("Trajets effectués", _numberOfTrips.toString()),
+                ],
+              ),
+            )
+          ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
@@ -118,7 +157,7 @@ class GlobalStats extends StatelessWidget {
           style: Theme.of(context).textTheme.display2,
         ),
       ],
-    )
+    );
   }
 
   GlobalStats(String this.name, String this.value);

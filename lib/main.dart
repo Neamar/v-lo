@@ -23,6 +23,7 @@ class VeloApp extends StatelessWidget {
         accentColor: Colors.lime
       ),
       home: HomePage(title: 'V€LO'),
+
     );
   }
 }
