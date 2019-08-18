@@ -17,7 +17,7 @@ class HomePage extends StatefulWidget {
 
   @override
   _HomePageState createState() => _HomePageState();
-}
+} 
 
 class Objective {
   int category;
