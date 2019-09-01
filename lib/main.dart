@@ -57,11 +57,6 @@ class _ScaffolderState extends State<Scaffolder> {
         elevation: 0.0,
       ),
       body: mainWidget,
-      /*floatingActionButton: FloatingActionButton(
-        onPressed: () => {},
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ),*/
       bottomNavigationBar: BottomNavigationBar(
         onTap: onTabTapped,
         currentIndex: _currentTab,
