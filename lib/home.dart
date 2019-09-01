@@ -120,6 +120,10 @@ class _HomePageState extends State<HomePage> {
                       width: MediaQuery.of(context).size.width,
                       decoration: BoxDecoration(
                         color: Theme.of(context).canvasColor,
+                        border: Border.all(
+                          width: 0,
+                          color: Theme.of(context).canvasColor,
+                        ),
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(14.0),
