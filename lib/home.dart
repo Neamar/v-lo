@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'model.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key, this.title}) : super(key: key);
@@ -59,97 +61,100 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Column(
-        children: <Widget>[
-          new Stack(
-            overflow: Overflow.visible,
-            alignment: new FractionalOffset(.5, 1.0),
-            children: [
-              Container(
-                color: Theme.of(context).primaryColor,
-                child: Column(
-                  children: <Widget>[
-                    Container(
-                      decoration: new BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: new BorderRadius.only(
-                              topLeft: radius,
-                              topRight: radius,
-                              bottomLeft: radius,
-                              bottomRight: radius)),
-                      child: Padding(
+      child: ChangeNotifierProvider(
+        builder: (context) => VeloModel(),
+        child: Column(
+          children: <Widget>[
+            new Stack(
+              overflow: Overflow.visible,
+              alignment: new FractionalOffset(.5, 1.0),
+              children: [
+                Container(
+                  color: Theme.of(context).primaryColor,
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                        decoration: new BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: new BorderRadius.only(
+                                topLeft: radius,
+                                topRight: radius,
+                                bottomLeft: radius,
+                                bottomRight: radius)),
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Icon(
+                            Icons.directions_bike,
+                            size: ICON_SIZE,
+                            color: Colors.red,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                      ),
+                      Text(
+                        _currentObjective.name,
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      Text(
+                        _getMoneySavedInEuros().toString() + "€",
+                        style: Theme.of(context)
+                            .textTheme
+                            .display1
+                            .apply(color: Colors.white),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 23, vertical: 8),
+                        child: LinearPercentIndicator(
+                          lineHeight: 9.0,
+                          percent: _moneySaved / _currentObjective.price,
+                          backgroundColor: Colors.white,
+                          progressColor: Theme.of(context).accentColor,
+                          animation: true,
+                          animationDuration: 500,
+                          animateFromLastPercent: true,
+                        ),
+                      ),
+                      Padding(
                         padding: const EdgeInsets.all(16.0),
-                        child: Icon(
-                          Icons.directions_bike,
-                          size: ICON_SIZE,
-                          color: Colors.red,
-                        ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                    ),
-                    Text(
-                      _currentObjective.name,
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    Text(
-                      _getMoneySavedInEuros().toString() + "€",
-                      style: Theme.of(context)
-                          .textTheme
-                          .display1
-                          .apply(color: Colors.white),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 23, vertical: 8),
-                      child: LinearPercentIndicator(
-                        lineHeight: 9.0,
-                        percent: _moneySaved / _currentObjective.price,
-                        backgroundColor: Colors.white,
-                        progressColor: Theme.of(context).accentColor,
-                        animation: true,
-                        animationDuration: 500,
-                        animateFromLastPercent: true,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                    ),
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).canvasColor,
-                        border: Border.all(
-                          width: 0,
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        decoration: BoxDecoration(
                           color: Theme.of(context).canvasColor,
+                          border: Border.all(
+                            width: 0,
+                            color: Theme.of(context).canvasColor,
+                          ),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(14.0),
                         ),
                       ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(14.0),
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              FloatingActionButton(
-                onPressed: () => _addMoney(190),
-                tooltip: 'Increment',
-                child: Icon(Icons.add),
-              ),
-            ],
-          ),
-          Expanded(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                GlobalStats(
-                    "Total économisé", _getTotalMoneySavedInEuros() + "€"),
-                GlobalStats("Trajets effectués", _numberOfTrips.toString()),
+                FloatingActionButton(
+                  onPressed: () => _addMoney(190),
+                  tooltip: 'Increment',
+                  child: Icon(Icons.add),
+                ),
               ],
             ),
-          ),
-        ],
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  GlobalStats(
+                      "Total économisé", _getTotalMoneySavedInEuros() + "€"),
+                  GlobalStats("Trajets effectués", _numberOfTrips.toString()),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
