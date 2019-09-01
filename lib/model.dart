@@ -10,10 +10,16 @@ class Item {
   String name;
 
   Item(this.price, this.priceReimbursed, this.name);
+
+  String getMoneySavedInEuros() {
+    return (priceReimbursed / 100).toStringAsFixed(2);
+  }
+
 }
 
 class VeloModel extends ChangeNotifier {
-  /// Internal, private state of the cart.
+  int _numberOfTrips = 5;
+
   List<Item> _items = [];
 
   /// An unmodifiable view of the items in the cart.
@@ -27,14 +33,19 @@ class VeloModel extends ChangeNotifier {
     return this._items[0];
   }
 
-  /// The current total price of all items (assuming all items cost $42).
-  int get totalPrice => _items.length * 42;
-
-  /// Adds [item] to cart. This is the only way to modify the cart from outside.
-  void add(Item item) {
-    _items.add(item);
-    // This call tells the widgets that are listening to this model to rebuild.
+  void addMoneyToCurrentItem(int value) {
+    getCurrentItem().priceReimbursed += value;
+    _numberOfTrips++;
     notifyListeners();
+  }
+
+  String getTotalMoneySavedInEuros() {
+    String r = ((getCurrentItem().priceReimbursed + 550) / 100).round().toString();
+    return r;
+  }
+
+  int getTotalNumberOfTrips() {
+    return _numberOfTrips;
   }
 
 }
