@@ -27,10 +27,13 @@ class Item {
         this.numberOfTrips.toString() + "|" + this.name.replaceAll("|", "");
   }
 
+  IconData getIcon() {
+    return Icons.directions_bike;
+  }
 }
 
 class VeloModel extends ChangeNotifier {
-  static final SP_KEY = "items";
+  static const SP_KEY = "items";
 
   SharedPreferences _prefs;
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:velo/objectives.dart';
 
 import 'home.dart';
 import 'model.dart';
@@ -49,7 +50,7 @@ class _ScaffolderState extends State<Scaffolder> {
     if (_currentTab == 0) {
       mainWidget = HomePage();
     } else if (_currentTab == 1) {
-      mainWidget = Container(color: Colors.purpleAccent);
+      mainWidget = ObjectivePage();
     }
 
     return Scaffold(
