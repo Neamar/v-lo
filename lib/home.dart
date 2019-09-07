@@ -7,7 +7,7 @@ import 'model.dart';
 class HomePage extends StatelessWidget {
   static const double ICON_SIZE = 80;
   static const radius = Radius.circular(ICON_SIZE);
-  String title;
+  final String title;
 
   HomePage({Key key, this.title}) : super(key: key);
 
@@ -121,8 +121,8 @@ class HomePage extends StatelessWidget {
 }
 
 class GlobalStats extends StatelessWidget {
-  String name;
-  String value;
+  final String name;
+  final String value;
 
   @override
   Widget build(BuildContext context) {
@@ -138,5 +138,5 @@ class GlobalStats extends StatelessWidget {
     );
   }
 
-  GlobalStats(String this.name, String this.value);
+  GlobalStats(this.name, this.value);
 }

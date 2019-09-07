@@ -59,7 +59,14 @@ class _ScaffolderState extends State<Scaffolder> {
       ),
       body: ChangeNotifierProvider(
         builder: (context) => VeloModel(),
-        child: mainWidget,
+        child: Consumer<VeloModel>(builder: (context, model, child) {
+          if (model.isLoading) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          return mainWidget;
+        }),
       ),
       bottomNavigationBar: BottomNavigationBar(
         onTap: onTabTapped,
