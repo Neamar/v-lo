@@ -47,7 +47,7 @@ class VeloModel extends ChangeNotifier {
 
     _prefs = await SharedPreferences.getInstance();
     if (!_prefs.containsKey(SP_KEY)) {
-      _prefs.setStringList(SP_KEY, ["2000|0|0|Casque de vélo"]);
+      _prefs.setStringList(SP_KEY, ["10000|0|0|Remboursement vélo"]);
     }
 
     List<String> itemsAsStrings = _prefs.getStringList(SP_KEY);
@@ -94,14 +94,15 @@ class VeloModel extends ChangeNotifier {
   }
 
   String getTotalMoneySavedInEuros() {
-    String r = ((getCurrentItem().priceReimbursed + 550) / 100)
+    int sum = items.map((i) => i.priceReimbursed).reduce((p, s) => p + s);
+    String r = (sum / 100)
         .round()
         .toString();
     return r;
   }
 
   int getTotalNumberOfTrips() {
-    return this._items[0].numberOfTrips;
+    return items.map((i) => i.numberOfTrips).reduce((p, s) => p + s);
   }
 
   @override

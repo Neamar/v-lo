@@ -16,9 +16,9 @@ class ObjectivePage extends StatelessWidget {
     return Consumer<VeloModel>(builder: (context, model, child) {
       return ListView.builder(
           padding: const EdgeInsets.all(8.0),
-          itemCount: model.items.length * 3,
+          itemCount: model.items.length,
           itemBuilder: (BuildContext context, int index) {
-            Item item = model.items[0];
+            Item item = model.items[index];
             return Row(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
