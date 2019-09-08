@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:velo/objectives.dart';
 
 import 'home.dart';
 import 'model.dart';
+import 'objectives.dart';
 import 'tabs.dart';
 
 void main() => runApp(VeloApp());
@@ -12,21 +12,15 @@ class VeloApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'V€LO',
-      theme: ThemeData(
-          // This is the theme of your application.
-          //
-          // Try running your application with "flutter run". You'll see the
-          // application has a blue toolbar. Then, without quitting the app, try
-          // changing the primarySwatch below to Colors.green and then invoke
-          // "hot reload" (press "r" in the console where you ran "flutter run",
-          // or simply save your changes to "hot reload" in a Flutter IDE).
-          // Notice that the counter didn't reset back to zero; the application
-          // is not restarted.
-          primarySwatch: Colors.red,
-          accentColor: Colors.lime),
-      home: Scaffolder(),
+    return ChangeNotifierProvider<VeloModel>(
+      builder: (context) => VeloModel(),
+      child: MaterialApp(
+        title: 'V€LO',
+        theme: ThemeData(
+            primarySwatch: Colors.red,
+            accentColor: Colors.lime),
+        home: Scaffolder(),
+      ),
     );
   }
 }
@@ -59,17 +53,14 @@ class _ScaffolderState extends State<Scaffolder> {
         title: Text("V€LO"),
         elevation: 0.0,
       ),
-      body: ChangeNotifierProvider(
-        builder: (context) => VeloModel(),
-        child: Consumer<VeloModel>(builder: (context, model, child) {
-          if (model.isLoading) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          return mainWidget;
-        }),
-      ),
+      body: Consumer<VeloModel>(builder: (context, model, child) {
+        if (model.isLoading) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+        return mainWidget;
+      }),
       bottomNavigationBar: BottomNavigationBar(
         onTap: onTabTapped,
         currentIndex: _currentTab,

@@ -2,6 +2,7 @@ import 'dart:collection';
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:velo/Currency.dart';
 
 
 class Item {
@@ -19,7 +20,7 @@ class Item {
   }
 
   String getMoneySavedInEuros() {
-    return (priceReimbursed / 100).toStringAsFixed(2);
+    return Currency.formatPrice(priceReimbursed);
   }
 
   String toString() {
@@ -95,9 +96,7 @@ class VeloModel extends ChangeNotifier {
 
   String getTotalMoneySavedInEuros() {
     int sum = items.map((i) => i.priceReimbursed).reduce((p, s) => p + s);
-    String r = (sum / 100)
-        .round()
-        .toString();
+    String r = Currency.formatPrice(sum);
     return r;
   }
 

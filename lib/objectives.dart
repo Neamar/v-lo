@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
+import 'package:velo/Currency.dart';
 import 'package:velo/tabs.dart';
 
 import 'model.dart';
@@ -43,9 +44,10 @@ class ObjectivePage extends AppTab {
                       progressColor: Theme.of(context).accentColor,
                     ),
                     Text(
-                      item.priceReimbursed.toString() +
+                      Currency.formatPrice(item.priceReimbursed) +
                           "€ remboursés sur " +
-                          item.price.toString(),
+                          Currency.formatPrice(item.price) +
+                          '€',
                     ),
                   ],
                 )
@@ -58,10 +60,9 @@ class ObjectivePage extends AppTab {
   @override
   FloatingActionButton getFloatingActionButton(BuildContext context) {
     return FloatingActionButton(
-      onPressed: () {
-        Provider.of<VeloModel>(context, listen: false)
-            .addMoneyToCurrentItem(190);
-      },
+      tooltip: "Create new objective",
+      onPressed: () => Provider.of<VeloModel>(context, listen: false)
+          .addMoneyToCurrentItem(190),
       child: Icon(Icons.add),
     );
   }
