@@ -4,6 +4,7 @@ import 'package:velo/objectives.dart';
 
 import 'home.dart';
 import 'model.dart';
+import 'tabs.dart';
 
 void main() => runApp(VeloApp());
 
@@ -46,7 +47,7 @@ class _ScaffolderState extends State<Scaffolder> {
 
   @override
   Widget build(BuildContext context) {
-    Widget mainWidget;
+    AppTab mainWidget;
     if (_currentTab == 0) {
       mainWidget = HomePage();
     } else if (_currentTab == 1) {
@@ -83,6 +84,7 @@ class _ScaffolderState extends State<Scaffolder> {
           ),
         ],
       ),
+      floatingActionButton: mainWidget.getFloatingActionButton(context),
     );
   }
 }

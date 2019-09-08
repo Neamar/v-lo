@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
+import 'package:velo/tabs.dart';
 
 import 'model.dart';
 
-class ObjectivePage extends StatelessWidget {
+class ObjectivePage extends AppTab {
   static const double ICON_SIZE = 80;
   static const radius = Radius.circular(ICON_SIZE);
   final String title;
@@ -52,5 +53,16 @@ class ObjectivePage extends StatelessWidget {
             );
           });
     });
+  }
+
+  @override
+  FloatingActionButton getFloatingActionButton(BuildContext context) {
+    return FloatingActionButton(
+      onPressed: () {
+        Provider.of<VeloModel>(context, listen: false)
+            .addMoneyToCurrentItem(190);
+      },
+      child: Icon(Icons.add),
+    );
   }
 }

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
+import 'package:velo/tabs.dart';
 
 import 'model.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends AppTab {
   static const double ICON_SIZE = 80;
   static const radius = Radius.circular(ICON_SIZE);
   final String title;
