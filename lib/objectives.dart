@@ -24,17 +24,22 @@ class ObjectivePage extends AppTab {
             return Row(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                Icon(
-                  item.getIcon(),
-                  size: 40,
-                  color: Colors.red,
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Icon(
+                    item.getIcon(),
+                    size: 40,
+                    color: Colors.red,
+                  ),
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    Text(
-                      item.name,
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(item.name,
+                          style: Theme.of(context).textTheme.body2),
                     ),
                     LinearPercentIndicator(
                       width: 250,
@@ -43,11 +48,14 @@ class ObjectivePage extends AppTab {
                       backgroundColor: Colors.white,
                       progressColor: Theme.of(context).accentColor,
                     ),
-                    Text(
-                      Currency.formatPrice(item.priceReimbursed) +
-                          "€ remboursés sur " +
-                          Currency.formatPrice(item.price) +
-                          '€',
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                          Currency.formatPrice(item.priceReimbursed) +
+                              "€ remboursés sur " +
+                              Currency.formatPrice(item.price) +
+                              '€',
+                          style: Theme.of(context).textTheme.caption),
                     ),
                   ],
                 )
@@ -97,7 +105,8 @@ class ObjectivePage extends AppTab {
           textColor: Colors.white,
           child: new Text('ENREGISTRER'),
           onPressed: () {
-            model.addItem(nameController.text, (100 * double.parse(priceController.text)).toInt());
+            model.addItem(nameController.text,
+                (100 * double.parse(priceController.text)).toInt());
             Navigator.of(context).pop();
           },
         ),
