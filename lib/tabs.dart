@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 abstract class AppTab extends StatelessWidget {
 
-  FloatingActionButton getFloatingActionButton(BuildContext context) {
+  Widget getFloatingActionButton(BuildContext context) {
     return null;
   }
 

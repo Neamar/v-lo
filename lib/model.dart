@@ -19,6 +19,11 @@ class Item {
     name = values[3];
   }
 
+  Item.create(this.name, this.price) {
+    numberOfTrips = 0;
+    priceReimbursed = 0;
+  }
+
   String getMoneySavedInEuros() {
     return Currency.formatPrice(priceReimbursed);
   }
@@ -91,6 +96,12 @@ class VeloModel extends ChangeNotifier {
     Item item = getCurrentItem();
     item.priceReimbursed += value;
     item.numberOfTrips += 1;
+    notifyListeners();
+  }
+
+  void addItem(String name, int price) {
+    Item item = Item.create(name, price);
+    this._items.add(item);
     notifyListeners();
   }
 

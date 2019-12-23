@@ -58,17 +58,22 @@ class ObjectivePage extends AppTab {
   }
 
   @override
-  FloatingActionButton getFloatingActionButton(BuildContext context) {
-    return FloatingActionButton(
-      tooltip: "Créer un nouvel objectif",
-      onPressed: () => showDialog(
-          context: context,
-          builder: (context) => getAddObjectiveDialog(context)),
-      child: Icon(Icons.add),
-    );
+  Widget getFloatingActionButton(BuildContext context) {
+    return Consumer<VeloModel>(builder: (context, model, child) {
+      return FloatingActionButton(
+        tooltip: "Créer un nouvel objectif",
+        onPressed: () => showDialog(
+            context: context,
+            builder: (context) => getAddObjectiveDialog(context, model)),
+        child: Icon(Icons.add),
+      );
+    });
   }
 
-  AlertDialog getAddObjectiveDialog(BuildContext context) {
+  AlertDialog getAddObjectiveDialog(BuildContext context, VeloModel model) {
+    final nameController = TextEditingController();
+    final priceController = TextEditingController();
+
     return AlertDialog(
       title: Text('Créer un nouvel objectif'),
       content: Column(
@@ -76,9 +81,11 @@ class ObjectivePage extends AppTab {
         children: <Widget>[
           TextField(
             decoration: InputDecoration(hintText: "Nom de l'objectif"),
+            controller: nameController,
           ),
           TextField(
             keyboardType: TextInputType.number,
+            controller: priceController,
             decoration: InputDecoration(
                 hintText: "0.00", suffixIcon: Icon(Icons.euro_symbol)),
           ),
@@ -90,6 +97,7 @@ class ObjectivePage extends AppTab {
           textColor: Colors.white,
           child: new Text('ENREGISTRER'),
           onPressed: () {
+            model.addItem(nameController.text, (100 * double.parse(priceController.text)).toInt());
             Navigator.of(context).pop();
           },
         ),
