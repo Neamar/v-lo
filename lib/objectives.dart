@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
-import 'package:velo/Currency.dart';
+import 'package:velo/currency.dart';
 import 'package:velo/tabs.dart';
 
 import 'model.dart';
@@ -60,10 +60,40 @@ class ObjectivePage extends AppTab {
   @override
   FloatingActionButton getFloatingActionButton(BuildContext context) {
     return FloatingActionButton(
-      tooltip: "Create new objective",
-      onPressed: () => Provider.of<VeloModel>(context, listen: false)
-          .addMoneyToCurrentItem(190),
+      tooltip: "Créer un nouvel objectif",
+      onPressed: () => showDialog(
+          context: context,
+          builder: (context) => getAddObjectiveDialog(context)),
       child: Icon(Icons.add),
+    );
+  }
+
+  AlertDialog getAddObjectiveDialog(BuildContext context) {
+    return AlertDialog(
+      title: Text('Créer un nouvel objectif'),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          TextField(
+            decoration: InputDecoration(hintText: "Nom de l'objectif"),
+          ),
+          TextField(
+            keyboardType: TextInputType.number,
+            decoration: InputDecoration(
+                hintText: "0.00", suffixIcon: Icon(Icons.euro_symbol)),
+          ),
+        ],
+      ),
+      actions: <Widget>[
+        new FlatButton(
+          color: Theme.of(context).primaryColor,
+          textColor: Colors.white,
+          child: new Text('ENREGISTRER'),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+      ],
     );
   }
 }
