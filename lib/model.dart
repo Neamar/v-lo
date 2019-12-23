@@ -89,13 +89,25 @@ class VeloModel extends ChangeNotifier {
   }
 
   Item getCurrentItem() {
-    return this._items[0];
+    for(int i = 0; i < this._items.length; i++) {
+      if(this._items[i].priceReimbursed < this._items[i].price) {
+        return this._items[i];
+      }
+    }
+    throw ErrorSummary("No more items available.");
   }
 
   void addMoneyToCurrentItem(int value) {
     Item item = getCurrentItem();
     item.priceReimbursed += value;
     item.numberOfTrips += 1;
+
+    if(item.priceReimbursed > item.price) {
+      int overflow = item.priceReimbursed - item.price;
+      item.priceReimbursed = item.price;
+      addMoneyToCurrentItem(overflow);
+    }
+
     notifyListeners();
   }
 
