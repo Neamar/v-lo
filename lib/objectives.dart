@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
@@ -44,7 +46,7 @@ class ObjectivePage extends AppTab {
                     LinearPercentIndicator(
                       width: 250,
                       lineHeight: 9.0,
-                      percent: item.priceReimbursed / item.price,
+                      percent: min(1, item.priceReimbursed / item.price),
                       backgroundColor: Colors.white,
                       progressColor: Theme.of(context).accentColor,
                     ),

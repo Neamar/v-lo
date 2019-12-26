@@ -86,7 +86,7 @@ class HomePage extends AppTab {
                             ),
                           ),
                           child: Padding(
-                            padding: const EdgeInsets.all(14.0),
+                            padding: const EdgeInsets.all(18.0),
                           ),
                         ),
                       ],
@@ -94,11 +94,23 @@ class HomePage extends AppTab {
                   },
                 ),
               ),
-              FloatingActionButton(
-                onPressed: () => Provider.of<VeloModel>(context, listen: false)
-                    .addMoneyToCurrentItem(190),
-                tooltip: 'Increment',
-                child: Icon(Icons.add),
+              Container(
+                width: 70.0,
+                height: 70.0,
+                decoration: new BoxDecoration(
+                  color: Color.fromARGB(255, 250, 250, 250),
+                  shape: BoxShape.circle,
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: FloatingActionButton(
+                    onPressed: () =>
+                        Provider.of<VeloModel>(context, listen: false)
+                            .addMoneyToCurrentItem(190),
+                    tooltip: 'Increment',
+                    child: Icon(Icons.add),
+                  ),
+                ),
               ),
             ],
           ),
